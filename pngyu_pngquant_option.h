@@ -13,9 +13,9 @@ public:
 
   PngquantOption() :
     m_out_suffix(),
-    m_ncolors(-1),
-    m_speed(-1),
-    m_force_overwrite(false),
+    m_ncolors(256),
+    m_speed(3),
+    m_force_overwrite(true),
     m_ie6_alpha_support(false),
     m_disable_floyd_steinberg_dithering(false)
   {}

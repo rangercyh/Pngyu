@@ -46,9 +46,8 @@ enum OutputFinenameMode
 };
 
 enum ImageOptimIntegration{
-  IMAGEOPTIM_ASK_EVERY_TIME = 0,
-  IMAGEOPTIM_ALWAYS_ENABLED,
-  IMAGEOPTIM_ALWAYS_DISABLED
+  IMAGEOPTIM_ALWAYS_DISABLED = 0,
+  IMAGEOPTIM_ALWAYS_ENABLED
 };
 
 enum TableColumn
@@ -92,6 +91,9 @@ public:
   pngyu::PngquantOption pngquant_option;
   bool overwrite_enabled;
   bool force_execute_if_negative;
+  bool image_optim_enabled;
+  QString optipng_path;
+  int optipng_o;
 
   QTableWidget *table_widget;
   int table_row;

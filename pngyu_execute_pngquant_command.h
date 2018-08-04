@@ -14,6 +14,7 @@ namespace pngyu
 QString pngquant_version( const QString &pnqquant_path );
 
 bool is_executable_pnqguant( const QFileInfo pngquant_path );
+bool is_executable_optipng( const QFileInfo optipng_path );
 
 QStringList find_executable_pngquant();
 

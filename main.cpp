@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
   PngyuApplication a(argc, argv);
   PngyuMainWindow w;
   a.set_pngyu_main( &w );
+  w.setWindowTitle("龙压");
   w.show();
 
   const QStringList argments = a.arguments();

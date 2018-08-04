@@ -107,6 +107,7 @@ protected:
   void write_settings();
 
   void update_file_table();
+  void update_ui();
 
   void append_file_info_recursive( const QFileInfo &file_info,
                                    const int recursive_directory_depth );
@@ -127,10 +128,12 @@ private:
   bool m_image_optim_enabled;
   pngyu::ImageOptimIntegration m_image_optim_integration;
   bool m_force_execute_if_negative_enables;
+  int m_optipng_o;
 
 private slots:
   void exec_pushed();
   void compress_option_changed();
+  void optipng_compress_option_changed();
   void other_output_directory_changed();
   void open_output_directory_pushed();
   void compress_option_mode_changed();

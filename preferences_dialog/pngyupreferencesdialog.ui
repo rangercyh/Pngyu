@@ -29,7 +29,7 @@
       <item row="0" column="1">
        <widget class="QPushButton" name="pushButton_apply">
         <property name="text">
-         <string>&amp;Apply</string>
+         <string>应用</string>
         </property>
        </widget>
       </item>
@@ -63,7 +63,7 @@
       <item row="0" column="3">
        <widget class="QPushButton" name="pushButton_close">
         <property name="text">
-         <string>&amp;Close</string>
+         <string>关闭</string>
         </property>
        </widget>
       </item>
@@ -73,13 +73,22 @@
    <item row="0" column="0" colspan="3">
     <widget class="QWidget" name="widget_preference_main" native="true">
      <layout class="QGridLayout" name="gridLayout_3">
-      <property name="margin">
+      <property name="leftMargin">
+       <number>3</number>
+      </property>
+      <property name="topMargin">
+       <number>3</number>
+      </property>
+      <property name="rightMargin">
+       <number>3</number>
+      </property>
+      <property name="bottomMargin">
        <number>3</number>
       </property>
       <item row="1" column="0">
        <widget class="QGroupBox" name="groupBox_general">
         <property name="title">
-         <string>General</string>
+         <string>有损压缩</string>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -88,7 +97,16 @@
          <item row="0" column="0" rowspan="2" colspan="2">
           <widget class="QWidget" name="widget_n_jbs" native="true">
            <layout class="QGridLayout" name="gridLayout_6">
-            <property name="margin">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item row="0" column="1">
@@ -110,7 +128,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label_n_jobs">
               <property name="text">
-               <string>Compress N files at once</string>
+               <string>同时压缩图片数量，越大需要消耗CPU越多</string>
               </property>
              </widget>
             </item>
@@ -120,7 +138,16 @@
          <item row="2" column="0" colspan="2">
           <widget class="QWidget" name="widget_pngquant_path" native="true">
            <layout class="QGridLayout" name="gridLayout_7">
-            <property name="margin">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item row="0" column="1">
@@ -139,7 +166,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label_pngquant_path">
               <property name="text">
-               <string>pngquatnt location</string>
+               <string>pngquant.exe 位置</string>
               </property>
              </widget>
             </item>
@@ -160,7 +187,7 @@
          <item row="3" column="0" colspan="2">
           <widget class="QCheckBox" name="checkBox_force_execute">
            <property name="text">
-            <string>Force execute even if saved size was negative</string>
+            <string>强制覆盖原文件，即使压缩后文件更大</string>
            </property>
           </widget>
          </item>
@@ -170,7 +197,7 @@
       <item row="2" column="0">
        <widget class="QGroupBox" name="groupBox_imageoptim_integration">
         <property name="title">
-         <string>ImageOptim integration</string>
+         <string>无损压缩</string>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -179,7 +206,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="label_imageoptim_path">
            <property name="text">
-            <string>Location</string>
+            <string>optipng.exe 位置</string>
            </property>
           </widget>
          </item>
@@ -199,19 +226,17 @@
          </item>
          <item row="0" column="0" colspan="3">
           <widget class="QComboBox" name="comboBox_imageoptim_integration">
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
            <item>
             <property name="text">
-             <string>Ask every time</string>
+             <string>关闭</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Always enabled</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Always disabled</string>
+             <string>打开</string>
             </property>
            </item>
           </widget>

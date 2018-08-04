@@ -11,56 +11,15 @@
 
 #include "pngyu_execute_pngquant_command.h"
 
-//namespace
-//{
-
-//const QString& dot_path()
-//{
-//  static QString p = QFileInfo( QApplication::applicationDirPath() ).absoluteFilePath();
-//  return p;
-//}
-
-//const QString& dot_dot_path()
-//{
-//  static QString p = QFileInfo( dot_path() + "/.." ).absoluteFilePath();
-//  return p;
-//}
-
-//QString to_dot_path( const QString &path )
-//{
-//  const QString &dot = dot_path();
-//  const QString &dot_dot = dot_dot_path();
-
-//  QString dot_path = QFileInfo( path ).absoluteFilePath();
-
-//  dot_path.replace( dot, "." );
-//  dot_path.replace( dot_dot, ".." );
-
-//  return dot_path;
-//}
-
-//QString from_dot_path( const QString &path )
-//{
-//  const QString dot = QFileInfo( QApplication::applicationDirPath() ).absoluteFilePath();
-//  const QString dot_dot = QFileInfo( dot_path() + "/.." ).absoluteFilePath();
-
-//  QString abs_path = path;
-//  abs_path.replace( "../", dot_dot + "/" );
-//  abs_path.replace( "./", dot + "/" );
-//  return abs_path;
-//}
-
-//}
-
 PngyuPreferencesDialog::PngyuPreferencesDialog(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::PngyuPreferencesDialog)
 {
   ui->setupUi(this);
 
-#ifndef Q_OS_MACX
-  ui->groupBox_imageoptim_integration->setVisible( false );
-#endif
+//#ifndef Q_OS_MACX
+//  ui->groupBox_imageoptim_integration->setVisible( false );
+//#endif
 
   ui->pushButton_ok->setVisible( false );
   ui->pushButton_cancel->setVisible( false );
@@ -82,7 +41,6 @@ PngyuPreferencesDialog::PngyuPreferencesDialog(QWidget *parent) :
   connect( ui->lineEdit_imageoptim_location, SIGNAL(textChanged(QString)), this, SLOT(preference_changed()) );
   connect( ui->comboBox_pngquant_path, SIGNAL(editTextChanged(QString)), this, SLOT(preference_changed()) );
   connect( ui->checkBox_force_execute, SIGNAL(toggled(bool)), this, SLOT(preference_changed()) );
-
 }
 
 PngyuPreferencesDialog::~PngyuPreferencesDialog()
@@ -115,19 +73,14 @@ void PngyuPreferencesDialog::set_image_optim_integrate_mode( const pngyu::ImageO
   QComboBox *combobox = ui->comboBox_imageoptim_integration;
   switch( mode )
   {
-    case pngyu::IMAGEOPTIM_ALWAYS_ENABLED:
-    {
-    combobox->setCurrentIndex( 1 );
-    break;
-    }
     case pngyu::IMAGEOPTIM_ALWAYS_DISABLED:
     {
-    combobox->setCurrentIndex( 2 );
+    combobox->setCurrentIndex( 0 );
     break;
     }
     default:
     {
-    combobox->setCurrentIndex( 0 );
+    combobox->setCurrentIndex( 1 );
     }
   }
 }
@@ -140,16 +93,12 @@ pngyu::ImageOptimIntegration PngyuPreferencesDialog::image_optim_integrate_mode(
     {
     return pngyu::IMAGEOPTIM_ALWAYS_ENABLED;
     }
-    case 2:
+    default:
     {
     return pngyu::IMAGEOPTIM_ALWAYS_DISABLED;
     }
-    default:
-    {
-    return pngyu::IMAGEOPTIM_ASK_EVERY_TIME;
-    }
   }
-  return pngyu::IMAGEOPTIM_ASK_EVERY_TIME;
+  return pngyu::IMAGEOPTIM_ALWAYS_DISABLED;
 }
 
 void PngyuPreferencesDialog::set_pngquant_paths( const QStringList &paths )
@@ -176,7 +125,7 @@ QString PngyuPreferencesDialog::pngquant_path() const
 
 void PngyuPreferencesDialog::set_image_optim_path( const QString &path )
 {
-  ui->lineEdit_imageoptim_location->setText( path );
+  ui->lineEdit_imageoptim_location->setText( pngyu::util::to_dot_path( path ) );
 }
 
 QString PngyuPreferencesDialog::image_optim_path() const
@@ -212,12 +161,12 @@ void PngyuPreferencesDialog::close_pushed()
 void PngyuPreferencesDialog::apply_pushed()
 {
   emit apply_pushed_signal();
-  set_apply_button_enabled( false );
+//  set_apply_button_enabled( false );
 }
 
 void PngyuPreferencesDialog::preference_changed()
 {
-  set_apply_button_enabled( true );
+//  set_apply_button_enabled( true );
 }
 
 void PngyuPreferencesDialog::pngquant_location_changed()
@@ -259,7 +208,7 @@ void PngyuPreferencesDialog::image_optim_location_changed()
 {
   QLineEdit * const line_edit = ui->lineEdit_imageoptim_location;
   QPalette palette = line_edit->palette();
-  if( QFile::exists( image_optim_path() ) )
+  if( pngyu::is_executable_optipng( image_optim_path() ) )
   {
     palette.setBrush( QPalette::Text, QBrush() );
   }

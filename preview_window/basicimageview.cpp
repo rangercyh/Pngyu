@@ -51,7 +51,7 @@ void BasicImageView::mouseMoveEvent(QMouseEvent *event)
 
 void BasicImageView::drawBackground(QPainter *painter, const QRectF &rect)
 {
-  const QRectF rectf = rect.intersect( sceneRect() );
+  const QRectF rectf = rect.intersected( sceneRect() );
 
   painter->fillRect( rectf, backgroundBrush() );
 

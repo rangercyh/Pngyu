@@ -21,6 +21,10 @@ public:
 
   void set_pngquant_option( const pngyu::PngquantOption &option );
 
+  void set_executable_optipng_path( const QString &path );
+
+  void set_optipng_enable( const bool optipng_enable );
+
   void set_original_png_data( const QByteArray &data );
   QByteArray original_png_data() const;
 
@@ -40,10 +44,12 @@ protected:
 private:
   pngyu::PngquantOption m_pngquant_option;
   QString m_pngquant_path;
+  QString m_optipng_path;
   QByteArray m_src_png_data;
   QByteArray m_dst_png_data;
   QString m_error_string;
   bool m_stop_request;
+  bool m_optipng_enable;
   
 signals:
   void compress_finished();

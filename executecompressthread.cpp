@@ -35,6 +35,16 @@ void ExecuteCompressThread::set_pngquant_option( const pngyu::PngquantOption &op
   m_pngquant_option = option;
 }
 
+void ExecuteCompressThread::set_executable_optipng_path( const QString &path )
+{
+  m_optipng_path = path;
+}
+
+void ExecuteCompressThread::set_optipng_enable( const bool optipng_enable )
+{
+  m_optipng_enable = optipng_enable;
+}
+
 bool ExecuteCompressThread::is_compress_succeeded() const
 {
   return ! m_dst_png_data.isEmpty();
@@ -77,7 +87,6 @@ void ExecuteCompressThread::run()
   clear_result();
 
   const QString &command = m_pngquant_option.make_pngquant_command_option_stdio_mode();
-        //m_pngquant_path );
 
   QString error_string;
 
@@ -97,7 +106,6 @@ void ExecuteCompressThread::run()
     {
       throw tr( "Error: Original data is empty" );
     }
-
     process.start( m_pngquant_path, command.trimmed().split( QRegExp("[ ]+") ) );
 
     { // waiting for process started or timeout or stop request.

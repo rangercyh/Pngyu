@@ -185,8 +185,9 @@ inline bool open_with_mac_app( const QStringList &files, const QString app_path 
 //    }
 //    args.push_back( script );
 //  }
-//  return QProcess::execute( "/usr/bin/pythonw", args );
-  return QProcess::startDetached( "/usr/bin/open", (QStringList() << "-a" << app_path) += files );
+    qDebug() << files;
+  return QProcess::execute( app_path, files );
+//  return QProcess::startDetached( "/usr/bin/open", (QStringList() << "-a" << app_path) += files );
   //return QProcess::startDetached( app_path, files );
   //return QProcess::execute( app_path, files );
 }

@@ -20,7 +20,10 @@ public:
       const QString &pngquant_path,
       const pngyu::PngquantOption &option,
       const bool overwrite_enable,
-      const bool force_execute_if_negative );
+      const bool force_execute_if_negative,
+      const bool image_optim_enabled,
+      const QString &optipng_path,
+      const int optipng_o );
 
   static pngyu::CompressResult execute_compress(
       const pngyu::CompressQueueData &data );

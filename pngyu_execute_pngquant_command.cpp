@@ -50,6 +50,16 @@ bool is_executable_pnqguant( const QFileInfo pngquant_path )
   return ! version.isEmpty();
 }
 
+bool is_executable_optipng( const QFileInfo optipng_path )
+{
+  if( ! optipng_path.exists() || ! optipng_path.isExecutable() || optipng_path.isBundle() )
+  {
+    return false;
+  }
+  const QString &version = pngquant_version( optipng_path.absoluteFilePath() );
+  return ! version.isEmpty();
+}
+
 QStringList find_executable_pngquant()
 {
   QStringList search_dirs;
@@ -63,7 +73,7 @@ QStringList find_executable_pngquant()
               << "/usr/sbin";
 #endif
 #ifdef Q_OS_WIN
-  search_dirs << ( QApplication::applicationDirPath() + "/pngquant" );
+  search_dirs << ( QApplication::applicationDirPath() );
 #endif
 
   QStringList found_paths;

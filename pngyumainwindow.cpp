@@ -35,26 +35,21 @@
 #include "executecompressworkerthread.h"
 #include "pngyu_custom_tablewidget_item.h"
 
-namespace
-{
-const QString DEFAULT_IMAGE_OPTIM_PATH = "/Applications/ImageOptim.app";
-
-} // namespace
-
 PngyuMainWindow::PngyuMainWindow(QWidget *parent) :
   QMainWindow( parent ),
   ui( new Ui::PngyuMainWindow ),
   m_preview_window( new PngyuPreviewWindow(this) ),
   m_preferences_dialog( new PngyuPreferencesDialog(this) ),
   m_current_pngquant_path(),
-  m_current_imageoptim_path( DEFAULT_IMAGE_OPTIM_PATH ),
+  m_current_imageoptim_path(),
   m_stop_request( false ),
   m_is_busy( false ),
   m_temporary_custom_output_custom_on( false ),
   m_num_thread(1),
   m_image_optim_enabled( false ),
-  m_image_optim_integration( pngyu::IMAGEOPTIM_ASK_EVERY_TIME ),
-  m_force_execute_if_negative_enables( false )
+  m_image_optim_integration( pngyu::IMAGEOPTIM_ALWAYS_DISABLED ),
+  m_force_execute_if_negative_enables( false ),
+  m_optipng_o(3)
 {
   ui->setupUi(this);
 
@@ -62,29 +57,30 @@ PngyuMainWindow::PngyuMainWindow(QWidget *parent) :
                   QString(" %1.%2.%3").arg(pngyu::VERSION_MAJOR)
                                       .arg(pngyu::VERSION_MINOR)
                                       .arg(pngyu::VERSION_REVISION));
-
+  m_preferences_dialog->setWindowTitle("设置");
   pngyu::util::success_icon();
   pngyu::util::failure_icon();
 
   ui->mainToolBar->setVisible( false );
 
   { // init file list table widget
+
     QTableWidget *table_widget = file_list_table_widget();
     table_widget->setColumnCount( pngyu::TABLE_COLUMN_COUNT );
     table_widget->setHorizontalHeaderItem( pngyu::COLUMN_BASENAME,
-                                           new QTableWidgetItem( tr("File Name") ) );
+                                           new QTableWidgetItem( tr("文件名") ) );
     table_widget->setHorizontalHeaderItem( pngyu::COLUMN_ABSOLUTE_PATH,
-                                           new QTableWidgetItem( tr("Path") ) );
+                                           new QTableWidgetItem( tr("路径") ) );
     table_widget->setHorizontalHeaderItem( pngyu::COLUMN_RESULT,
-                                           new QTableWidgetItem( tr("Result") ) );
+                                           new QTableWidgetItem( tr("结果") ) );
     table_widget->setHorizontalHeaderItem( pngyu::COLUMN_ORIGINAL_SIZE,
-                                           new QTableWidgetItem( tr("Size") ) );
+                                           new QTableWidgetItem( tr("原文件大小") ) );
     table_widget->setHorizontalHeaderItem( pngyu::COLUMN_OUTPUT_SIZE,
-                                           new QTableWidgetItem( tr("Compressed Size") ) );
+                                           new QTableWidgetItem( tr("压缩后大小") ) );
     table_widget->setHorizontalHeaderItem( pngyu::COLUMN_SAVED_SIZE,
-                                           new QTableWidgetItem( tr("Saved Size") ) );
+                                           new QTableWidgetItem( tr("节省大小") ) );
     table_widget->setHorizontalHeaderItem( pngyu::COLUMN_SAVED_SIZE_RATE,
-                                           new QTableWidgetItem( tr("Saved Size(%)") ) );
+                                           new QTableWidgetItem( tr("节省百分比(%)") ) );
 
     pngyu::util::set_drop_here_stylesheet(
           table_widget->viewport(), false );
@@ -130,6 +126,7 @@ PngyuMainWindow::PngyuMainWindow(QWidget *parent) :
 
   connect( ui->tableWidget_filelist, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(table_widget_current_changed()) );
 
+  ui->pushButton_preview->setVisible(false);
   connect( ui->pushButton_preview, SIGNAL(toggled(bool)),
            this, SLOT(preview_button_toggled(bool)) );
 
@@ -141,8 +138,13 @@ PngyuMainWindow::PngyuMainWindow(QWidget *parent) :
            this, SLOT(compress_option_changed()) );
   connect( ui->horizontalSlider_compress_speed, SIGNAL(valueChanged(int)),
            this, SLOT(compress_option_changed()) );
+  connect( ui->horizontalSlider_compress_o, SIGNAL(valueChanged(int)),
+           this, SLOT(optipng_compress_option_changed()) );
+  ui->widget_compress_option_check_boxes->setVisible(false);
+  ui->checkBox_ie6_support->setVisible(false);
   connect( ui->checkBox_ie6_support, SIGNAL(stateChanged(int)),
            this, SLOT(compress_option_changed()) );
+  ui->checkBox_dithered->setVisible(false);
   connect( ui->checkBox_dithered, SIGNAL(stateChanged(int)),
            this, SLOT(compress_option_changed()) );
   connect( ui->toolButton_compress_option_default, SIGNAL(toggled(bool)),
@@ -175,26 +177,12 @@ PngyuMainWindow::PngyuMainWindow(QWidget *parent) :
 
   { // set window size
     const QPoint center_pos = QApplication::desktop()->geometry().center();
-    const QSize window_size( 500, 400 );
+    const QSize window_size( 1024, 768 );
     setGeometry( QRect( center_pos - QPoint( window_size.width() / 2, window_size.height() / 2 ),
                         window_size ) );
   }
-
-  { // find executable pngquant
-    const QStringList &executable_pngquant_list =  pngyu::find_executable_pngquant();
-    if( executable_pngquant_list.empty() )
-    {
-      set_busy_mode( true );
-      ui->statusBar->showMessage( tr( "Executable pngquant not found" ) );
-    }
-    else
-    {
-      set_executable_pngquant_path( executable_pngquant_list.first() );
-    }
-  }
-
   read_settings();
-
+  update_ui();
 }
 
 PngyuMainWindow::~PngyuMainWindow()
@@ -214,7 +202,7 @@ void PngyuMainWindow::read_settings()
 
   QSettings settings( fn, QSettings::IniFormat );
   settings.beginGroup( "options" );
-  const int imageoptim = settings.value( "imageoptim_integration", pngyu::IMAGEOPTIM_ASK_EVERY_TIME ).toInt();
+  const int imageoptim = settings.value( "imageoptim_integration", pngyu::IMAGEOPTIM_ALWAYS_DISABLED ).toInt();
   set_image_optim_integration_mode( static_cast<pngyu::ImageOptimIntegration>( imageoptim ) );
 
   const QString pngquant_path =
@@ -224,8 +212,8 @@ void PngyuMainWindow::read_settings()
     set_executable_pngquant_path( pngquant_path );
   }
 
-  const QString imageoptim_path = settings.value( "imageoptim_path", QString(DEFAULT_IMAGE_OPTIM_PATH) ).toString();
-  if( QFile::exists( imageoptim_path ) )
+  const QString imageoptim_path = settings.value( "imageoptim_path", QString() ).toString();
+  if( pngyu::is_executable_optipng( imageoptim_path ) )
   {
     set_executable_image_optim_path( imageoptim_path );
   }
@@ -255,7 +243,7 @@ void PngyuMainWindow::write_settings()
 
   settings.setValue( "imageoptim_integration", image_optim_integration_mode() );
 
-  settings.setValue( "imageoptim_path", executable_image_optim_path() );
+  settings.setValue( "imageoptim_path", pngyu::util::to_dot_path(executable_image_optim_path()) );
 
   settings.setValue( "num_thread", num_thread() );
 
@@ -559,20 +547,20 @@ int PngyuMainWindow::compress_speed() const
 
 void PngyuMainWindow::set_image_optim_integration_mode( const pngyu::ImageOptimIntegration mode )
 {
-#ifdef Q_OS_MACX
+//#ifdef Q_OS_MACX
   m_image_optim_integration = mode;
-#else
-  m_image_optim_enabled = pngyu::IMAGEOPTIM_ALWAYS_DISABLED;
-#endif
+//#else
+//  m_image_optim_enabled = pngyu::IMAGEOPTIM_ALWAYS_DISABLED;
+//#endif
 }
 
 pngyu::ImageOptimIntegration PngyuMainWindow::image_optim_integration_mode() const
 {
-#ifdef Q_OS_MACX
+//#ifdef Q_OS_MACX
   return m_image_optim_integration;
-#else
-  return pngyu::IMAGEOPTIM_ALWAYS_DISABLED;
-#endif
+//#else
+//  return pngyu::IMAGEOPTIM_ALWAYS_DISABLED;
+//#endif
 }
 
 void PngyuMainWindow::set_num_thread( const int num )
@@ -618,6 +606,7 @@ void PngyuMainWindow::execute_compress_all( bool image_optim_enabled )
 
   const pngyu::PngquantOption &option = make_pngquant_option( QString() );
   const QString &pngquant_path = executable_pngquant_path();
+  const QString &optipng_path = executable_image_optim_path();
 
   QQueue<pngyu::CompressQueueData> queue;
 
@@ -645,6 +634,9 @@ void PngyuMainWindow::execute_compress_all( bool image_optim_enabled )
     data.force_execute_if_negative = b_force_execute_if_negative;
     data.table_widget = table_widget;
     data.table_row = row;
+    data.image_optim_enabled = image_optim_enabled;
+    data.optipng_path = optipng_path;
+    data.optipng_o = m_optipng_o;
 
     queue.enqueue( data );
 
@@ -729,12 +721,6 @@ void PngyuMainWindow::execute_compress_all( bool image_optim_enabled )
           pngyu::util::size_to_string_kb( total_saved_size );
     ui->statusBar->showMessage( tr("Total %1 saved").arg(size_string) );
   }
-
-  if( image_optim_enabled )
-  {
-    pngyu::util::open_with_mac_app( succeed_dst_filepaths, executable_image_optim_path() );
-  }
-
   set_busy_mode( false );
 
   ui->widget_executing->setVisible( false );
@@ -983,6 +969,24 @@ void PngyuMainWindow::update_file_table()
   table_widget_current_changed();
 }
 
+void PngyuMainWindow::update_ui()
+{
+  // find executable pngquant
+  if ( ! pngyu::is_executable_pnqguant(executable_pngquant_path()) )
+  {
+    const QStringList &executable_pngquant_list =  pngyu::find_executable_pngquant();
+    if( executable_pngquant_list.empty() )
+    {
+      set_busy_mode( true );
+      ui->statusBar->showMessage( tr( "Executable pngquant not found" ) );
+    }
+    else
+    {
+      set_executable_pngquant_path( executable_pngquant_list.first() );
+    }
+  }
+}
+
 void PngyuMainWindow::append_file_info_list( const QList<QFileInfo> &info_list )
 {
   if( is_busy() )
@@ -1051,39 +1055,31 @@ void PngyuMainWindow::exec_pushed()
     menu_preferences_pushed();
     return;
   }
-
-#ifdef Q_OS_MACX
-  bool b_yes_pushed = false;
-  if( image_optim_integration_mode() == pngyu::IMAGEOPTIM_ASK_EVERY_TIME &&
-      QFile::exists( executable_image_optim_path() )  )
-  { // confirm optimize with ImageOptim
-    PngyuImageOptimIntegrationQuestionDialog dlg;
-    const int res = dlg.exec();
-    b_yes_pushed = ( res == QDialog::Accepted );
-    if( dlg.is_dont_ask_again_checked() )
+  const bool image_optipng = image_optim_integration_mode();
+  if ( image_optipng == pngyu::IMAGEOPTIM_ALWAYS_ENABLED )
+  {
+    if ( !pngyu::is_executable_optipng( executable_image_optim_path() ) )
     {
-      set_image_optim_integration_mode(
-            b_yes_pushed ? pngyu::IMAGEOPTIM_ALWAYS_ENABLED : pngyu::IMAGEOPTIM_ALWAYS_DISABLED );
+      QMessageBox::warning( this, "", "optipng path is invalid" );
+      menu_preferences_pushed();
+      return;
     }
   }
-  const bool b_image_optim =
-      image_optim_integration_mode() == pngyu::IMAGEOPTIM_ALWAYS_ENABLED ||
-      b_yes_pushed;
-#else
-  const bool b_image_optim = false;
-#endif
-
   QTime t;
   t.start();
-  execute_compress_all( b_image_optim );
+  execute_compress_all( image_optipng );
   qDebug() << "execute" << t.elapsed() << "ms elapsed";
-
 }
 
 void PngyuMainWindow::compress_option_changed()
 {
   m_preview_window->set_current_pngquant_option(
         make_pngquant_option( QString() ) );
+}
+
+void PngyuMainWindow::optipng_compress_option_changed()
+{
+  m_optipng_o = ui->horizontalSlider_compress_o->value();
 }
 
 void PngyuMainWindow::other_output_directory_changed()
@@ -1123,6 +1119,7 @@ void PngyuMainWindow::compress_option_mode_changed()
 {
   const pngyu::CompressOptionMode mode = current_compress_option_mode();
   ui->widget_compress_option_custom_options->setVisible( mode == pngyu::COMPRESS_OPTION_CUSTOM );
+  ui->groupBox_optipng_option->setVisible( mode == pngyu::COMPRESS_OPTION_CUSTOM );
 }
 
 void PngyuMainWindow::output_option_mode_changed()
@@ -1263,6 +1260,7 @@ void PngyuMainWindow::menu_preferences_pushed()
 {
 
   m_preferences_dialog->set_n_jobs( num_thread() );
+  qDebug() << image_optim_integration_mode();
   m_preferences_dialog->set_image_optim_integrate_mode( image_optim_integration_mode() );
   m_preferences_dialog->set_image_optim_path( executable_image_optim_path() );
   m_preferences_dialog->set_pngquant_paths( pngyu::find_executable_pngquant() );
@@ -1270,7 +1268,7 @@ void PngyuMainWindow::menu_preferences_pushed()
   m_preferences_dialog->set_force_execute_if_negative_enabled( is_force_execute_if_negative_enabled() );
 
 
-  m_preferences_dialog->set_apply_button_enabled( false );
+//  m_preferences_dialog->set_apply_button_enabled( false );
 
   m_preferences_dialog->show();
 }
@@ -1283,10 +1281,27 @@ void PngyuMainWindow::menu_quit_pushed()
 void PngyuMainWindow::preferences_apply_pushed()
 {
   set_num_thread( m_preferences_dialog->n_jobs() );
+
+  if ( m_preferences_dialog->image_optim_integrate_mode() == pngyu::IMAGEOPTIM_ALWAYS_ENABLED )
+  {
+    if ( !pngyu::is_executable_optipng( m_preferences_dialog->image_optim_path() ) )
+    {
+      QMessageBox::warning( this, "", "optipng path is invalid" );
+      return;
+    }
+  }
+  qDebug() << m_preferences_dialog->image_optim_integrate_mode();
   set_image_optim_integration_mode( m_preferences_dialog->image_optim_integrate_mode() );
   set_executable_image_optim_path( m_preferences_dialog->image_optim_path() );
+
+  if( ! pngyu::is_executable_pnqguant(m_preferences_dialog->pngquant_path()) )
+  {
+    QMessageBox::warning( this, "", "pngquant path is invalid" );
+    return;
+  }
   set_executable_pngquant_path( m_preferences_dialog->pngquant_path());
   set_force_execute_if_negative_enabled( m_preferences_dialog->is_force_execute_if_negative_enabled() );
+  set_busy_mode( false );
 }
 
 void PngyuMainWindow::stop_request()

@@ -23,7 +23,10 @@ pngyu::CompressResult ExecuteCompressWorkerThread::execute_compress(
     const QString &pngquant_path,
     const pngyu::PngquantOption &option,
     const bool overwrite_enable,
-    const bool force_execute_if_negative )
+    const bool force_execute_if_negative,
+    const bool image_optim_enabled,
+    const QString &optipng_path,
+    const int m_optipng_o )
 {
   pngyu::CompressResult res;
   res.src_path = src_path;
@@ -50,6 +53,8 @@ pngyu::CompressResult ExecuteCompressWorkerThread::execute_compress(
     ExecuteCompressThread compress_thread;
     compress_thread.set_executable_pngquant_path( pngquant_path );
     compress_thread.set_pngquant_option( option );
+    compress_thread.set_optipng_enable( image_optim_enabled );
+    compress_thread.set_executable_optipng_path( optipng_path );
 
     { // exetute pngquant command
       compress_thread.clear_result();
@@ -67,13 +72,12 @@ pngyu::CompressResult ExecuteCompressWorkerThread::execute_compress(
       {
         throw compress_thread.error_string();
       }
-
     }
 
-    const QByteArray &dst_png_data =
-        (force_execute_if_negative || compress_thread.saved_size() >= 0 ) ?
-          compress_thread.output_png_data() :
-          compress_thread.original_png_data();
+//    const QByteArray &dst_png_data =
+//        (force_execute_if_negative || compress_thread.saved_size() >= 0 ) ?
+//          compress_thread.output_png_data() :
+//          compress_thread.original_png_data();
 
     if( dst_path_exists )
     {
@@ -85,14 +89,28 @@ pngyu::CompressResult ExecuteCompressWorkerThread::execute_compress(
     }
 
     // copy result file to dst_path
-    if( ! pngyu::util::write_png_data( dst_path, dst_png_data ) )
+    if( ! pngyu::util::write_png_data( dst_path, compress_thread.output_png_data() ) )
     {
        throw tr( "Error: Couldn't save output file" );
     }
 
+    if( image_optim_enabled )
+    {
+      qDebug() << optipng_path + QString( " -strip all -quiet -clobber -o" ) + QString::number(m_optipng_o, 10) + QString(" -i0 ") + dst_path;
+      QProcess::execute(optipng_path + QString( " -strip all -quiet -clobber -o" ) + QString::number(m_optipng_o, 10) + QString(" -i0 ") + dst_path);
+    }
+    QFileInfo info(dst_path);
     res.result = true;
     res.src_size = src_png_data.size();
-    res.dst_size = dst_png_data.size();
+    res.dst_size = info.size();
+    if(!force_execute_if_negative)
+    {
+      if(info.size() > src_png_data.size())
+      {
+        pngyu::util::write_png_data( dst_path, src_png_data );
+        res.dst_size = src_png_data.size();
+      }
+    }
   }
   catch( const QString &ex )
   {
@@ -112,7 +130,10 @@ pngyu::CompressResult ExecuteCompressWorkerThread::execute_compress(
         data.pngquant_path,
         data.pngquant_option,
         data.overwrite_enabled,
-        data.force_execute_if_negative );
+        data.force_execute_if_negative,
+        data.image_optim_enabled,
+        data.optipng_path,
+        data.optipng_o );
 }
 
 void ExecuteCompressWorkerThread::show_compress_result( QTableWidget *table_widget, const int row, const pngyu::CompressResult &result )
@@ -168,7 +189,7 @@ void ExecuteCompressWorkerThread::show_compress_result( QTableWidget *table_widg
     resultItem->setToolTip( result.error_message );
     resultItem->setIcon( pngyu::util::failure_icon() );
   }
-
+  table_widget->update();
   table_widget->scrollToItem( resultItem );
 }
 

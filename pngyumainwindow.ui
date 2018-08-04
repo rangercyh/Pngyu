@@ -109,13 +109,31 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <property name="margin">
+    <property name="leftMargin">
+     <number>6</number>
+    </property>
+    <property name="topMargin">
+     <number>6</number>
+    </property>
+    <property name="rightMargin">
+     <number>6</number>
+    </property>
+    <property name="bottomMargin">
      <number>6</number>
     </property>
     <item row="7" column="0" colspan="5">
      <widget class="QWidget" name="widget" native="true">
       <layout class="QGridLayout" name="gridLayout_16">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <property name="spacing">
@@ -136,7 +154,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           </size>
          </property>
          <property name="text">
-          <string>Compress Start</string>
+          <string>开始压缩</string>
          </property>
         </widget>
        </item>
@@ -155,7 +173,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           </size>
          </property>
          <property name="text">
-          <string>Compress Stop</string>
+          <string>压缩停止</string>
          </property>
          <property name="icon">
           <iconset resource="resource/resource.qrc">
@@ -169,7 +187,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           <property name="spacing">
            <number>4</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -190,8 +217,11 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           </item>
           <item>
            <widget class="QLabel" name="label_executing">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
-             <string>Now Compressing...</string>
+             <string>正在压缩</string>
             </property>
            </widget>
           </item>
@@ -221,7 +251,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
     <item row="5" column="0" colspan="5">
      <widget class="QGroupBox" name="groupBox_output_option">
       <property name="title">
-       <string>Output Option</string>
+       <string>输出选项</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <property name="leftMargin">
@@ -261,22 +291,40 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           </sizepolicy>
          </property>
          <layout class="QGridLayout" name="gridLayout_13">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <property name="verticalSpacing">
            <number>4</number>
-          </property>
-          <property name="margin">
-           <number>0</number>
           </property>
           <item row="1" column="0">
            <widget class="QGroupBox" name="groupBox_output_filename">
             <property name="title">
-             <string>Output Filename</string>
+             <string>输出文件名</string>
             </property>
             <property name="flat">
              <bool>true</bool>
             </property>
             <layout class="QGridLayout" name="gridLayout_10">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <property name="rightMargin">
+              <number>6</number>
+             </property>
+             <property name="bottomMargin">
               <number>6</number>
              </property>
              <item row="0" column="0" colspan="3">
@@ -292,12 +340,12 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                </property>
                <item>
                 <property name="text">
-                 <string>[Original].png</string>
+                 <string>[原文件名].png</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Custom Filename</string>
+                 <string>自定义文件名</string>
                 </property>
                </item>
               </widget>
@@ -305,13 +353,22 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
              <item row="1" column="0" colspan="3">
               <widget class="QWidget" name="widget_custom_output_filename" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_3">
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item>
                  <widget class="QLabel" name="label_custom_filename">
                   <property name="text">
-                   <string>Filename :</string>
+                   <string>文件名</string>
                   </property>
                  </widget>
                 </item>
@@ -330,7 +387,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                    <enum>QFrame::Sunken</enum>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_3">
-                   <property name="margin">
+                   <property name="leftMargin">
+                    <number>2</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>2</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>2</number>
+                   </property>
+                   <property name="bottomMargin">
                     <number>2</number>
                    </property>
                    <item row="0" column="2">
@@ -346,7 +412,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                    <item row="0" column="3">
                     <widget class="QLabel" name="label_outoput_original_name">
                      <property name="text">
-                      <string>+ [Original Name] +</string>
+                      <string>+ 原文件名 +</string>
                      </property>
                     </widget>
                    </item>
@@ -378,19 +444,28 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
              </sizepolicy>
             </property>
             <property name="title">
-             <string> </string>
+             <string/>
             </property>
             <property name="flat">
              <bool>true</bool>
             </property>
             <layout class="QGridLayout" name="gridLayout_11">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <property name="rightMargin">
+              <number>6</number>
+             </property>
+             <property name="bottomMargin">
               <number>6</number>
              </property>
              <item row="0" column="0">
               <widget class="QCheckBox" name="checkBox_overwrite">
                <property name="text">
-                <string>Overwrite</string>
+                <string>覆盖</string>
                </property>
               </widget>
              </item>
@@ -400,13 +475,22 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           <item row="0" column="0" colspan="2">
            <widget class="QGroupBox" name="groupBox_output_directory_mode">
             <property name="title">
-             <string>Output Directory</string>
+             <string>输出文件夹</string>
             </property>
             <property name="flat">
              <bool>true</bool>
             </property>
             <layout class="QGridLayout" name="gridLayout_9">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <property name="rightMargin">
+              <number>6</number>
+             </property>
+             <property name="bottomMargin">
               <number>6</number>
              </property>
              <item row="1" column="1">
@@ -415,7 +499,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <property name="spacing">
                  <number>4</number>
                 </property>
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item>
@@ -430,7 +523,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                    <string>Save to specified other directory</string>
                   </property>
                   <property name="text">
-                   <string>Other Directory</string>
+                   <string>其他文件夹</string>
                   </property>
                   <attribute name="buttonGroup">
                    <string notr="true">buttonGroup_output_directory_mode</string>
@@ -440,10 +533,10 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <item>
                  <widget class="QLineEdit" name="lineEdit_output_directory">
                   <property name="toolTip">
-                   <string>Input output directory or drop it here ...</string>
+                   <string>选择文件夹...</string>
                   </property>
                   <property name="placeholderText">
-                   <string>Input output directory or drop it here ...</string>
+                   <string>选择文件夹...</string>
                   </property>
                  </widget>
                 </item>
@@ -473,7 +566,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <string>Save to same as directory that original file exists</string>
                </property>
                <property name="text">
-                <string>Same Directory</string>
+                <string>原文件夹</string>
                </property>
                <property name="checked">
                 <bool>true</bool>
@@ -519,7 +612,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
              </size>
             </property>
             <property name="text">
-             <string>Custom</string>
+             <string>自定义输出</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -538,7 +631,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
              </size>
             </property>
             <property name="text">
-             <string>Overwrite the original</string>
+             <string>覆盖原文件</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -566,7 +659,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
        </sizepolicy>
       </property>
       <property name="text">
-       <string>&lt;a href=&quot;http://nukesaq88.github.io/Pngyu/&quot; style=&quot;color: darkgray;&quot;&gt;Home Page&lt;/a&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/rangercyh/Pngyu&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;开发者&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="textFormat">
        <enum>Qt::RichText</enum>
@@ -585,7 +678,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
        </sizepolicy>
       </property>
       <property name="title">
-       <string>Compress Option</string>
+       <string>有损压缩参数设置</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_12">
        <property name="leftMargin">
@@ -603,49 +696,11 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
        <property name="spacing">
         <number>4</number>
        </property>
-       <item row="1" column="1">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="2" colspan="2">
-        <widget class="QPushButton" name="pushButton_preview">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>160</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Preview</string>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="0" rowspan="2" colspan="4">
         <widget class="QWidget" name="widget_compress_option_custom_options" native="true">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
@@ -653,7 +708,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           </sizepolicy>
          </property>
          <layout class="QGridLayout" name="gridLayout_19">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <property name="spacing">
@@ -662,7 +726,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           <item row="0" column="0" colspan="2">
            <widget class="QWidget" name="widget_compress_option_sliders" native="true">
             <layout class="QGridLayout" name="gridLayout_15">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <property name="spacing">
@@ -677,7 +750,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <enum>QFrame::Sunken</enum>
                </property>
                <layout class="QGridLayout" name="gridLayout_6">
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>4</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
                  <number>4</number>
                 </property>
                 <property name="spacing">
@@ -721,7 +803,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <item row="1" column="0">
                  <widget class="QLabel" name="label_colors">
                   <property name="text">
-                   <string>Colors</string>
+                   <string>颜色深度</string>
                   </property>
                  </widget>
                 </item>
@@ -737,7 +819,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <enum>QFrame::Sunken</enum>
                </property>
                <layout class="QGridLayout" name="gridLayout_5">
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>4</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
                  <number>4</number>
                 </property>
                 <property name="spacing">
@@ -746,7 +837,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_compress_high_quality">
                   <property name="text">
-                   <string>High Quality</string>
+                   <string>压缩慢（压缩比高）</string>
                   </property>
                  </widget>
                 </item>
@@ -775,7 +866,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <item row="0" column="2">
                  <widget class="QLabel" name="label_compress_high_speed">
                   <property name="text">
-                   <string>High Speed</string>
+                   <string>压缩快</string>
                   </property>
                  </widget>
                 </item>
@@ -788,7 +879,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           <item row="1" column="0" colspan="2">
            <widget class="QWidget" name="widget_compress_option_check_boxes" native="true">
             <layout class="QGridLayout" name="gridLayout_17">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <property name="spacing">
@@ -803,7 +903,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <enum>QFrame::Sunken</enum>
                </property>
                <layout class="QGridLayout" name="gridLayout_7">
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>4</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
                  <number>4</number>
                 </property>
                 <property name="spacing">
@@ -831,7 +940,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                 <enum>QFrame::Sunken</enum>
                </property>
                <layout class="QGridLayout" name="gridLayout_4">
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>4</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
                  <number>4</number>
                 </property>
                 <property name="spacing">
@@ -886,7 +1004,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
              </size>
             </property>
             <property name="text">
-             <string>Default</string>
+             <string>默认</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -908,7 +1026,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
              </size>
             </property>
             <property name="text">
-             <string>Custom</string>
+             <string>自定义</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -927,10 +1045,60 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           <property name="spacing">
            <number>4</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
          </layout>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="2" colspan="2">
+        <widget class="QPushButton" name="pushButton_preview">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>160</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>图片预览</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -939,7 +1107,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
     <item row="4" column="0" colspan="5">
      <widget class="QGroupBox" name="groupBox_filelist">
       <property name="title">
-       <string>Files</string>
+       <string>文件列表</string>
       </property>
       <property name="flat">
        <bool>false</bool>
@@ -989,7 +1157,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           <string>Clear all files</string>
          </property>
          <property name="text">
-          <string>Clear</string>
+          <string>清空</string>
          </property>
          <property name="icon">
           <iconset resource="resource/resource.qrc">
@@ -1000,7 +1168,16 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
        <item row="3" column="1">
         <widget class="QWidget" name="widget_file_appending" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -1022,7 +1199,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
           <item>
            <widget class="QLabel" name="label_file_appending">
             <property name="text">
-             <string>Adding files...</string>
+             <string>添加文件</string>
             </property>
            </widget>
           </item>
@@ -1038,7 +1215,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
              <string>Stop searcing</string>
             </property>
             <property name="text">
-             <string>Stop</string>
+             <string>停止</string>
             </property>
             <property name="icon">
              <iconset resource="resource/resource.qrc">
@@ -1090,20 +1267,176 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
       </layout>
      </widget>
     </item>
+    <item row="1" column="0" colspan="5">
+     <widget class="QGroupBox" name="groupBox_optipng_option">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>无损压缩参数设置</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_21">
+       <property name="leftMargin">
+        <number>4</number>
+       </property>
+       <property name="topMargin">
+        <number>4</number>
+       </property>
+       <property name="rightMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>4</number>
+       </property>
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QWidget" name="widget_optipng_compress_option" native="true">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_22">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
+          <property name="spacing">
+           <number>4</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QWidget" name="widget_optipng_compress_option_sliders" native="true">
+            <layout class="QGridLayout" name="gridLayout_23">
+             <property name="leftMargin">
+              <number>4</number>
+             </property>
+             <property name="topMargin">
+              <number>4</number>
+             </property>
+             <property name="rightMargin">
+              <number>4</number>
+             </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
+             <property name="spacing">
+              <number>4</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QFrame" name="frame_speed_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Panel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Sunken</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_14">
+                <property name="leftMargin">
+                 <number>4</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>4</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>4</number>
+                </property>
+                <property name="spacing">
+                 <number>4</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_compress_high_quality_2">
+                  <property name="text">
+                   <string>压缩快</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QSlider" name="horizontalSlider_compress_o">
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>7</number>
+                  </property>
+                  <property name="pageStep">
+                   <number>8</number>
+                  </property>
+                  <property name="value">
+                   <number>3</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TicksAbove</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>1</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLabel" name="label_compress_high_speed_2">
+                  <property name="text">
+                   <string>压缩慢（压缩比高）</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>689</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuPngyu">
     <property name="title">
-     <string>&amp;File</string>
+     <string>属性</string>
     </property>
     <addaction name="action_preferences"/>
     <addaction name="action_quit"/>
@@ -1118,15 +1451,19 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+  </widget>
   <action name="action_preferences">
    <property name="text">
-    <string>&amp;Preferences</string>
+    <string>设置</string>
    </property>
   </action>
   <action name="action_quit">
    <property name="text">
-    <string>&amp;Quit</string>
+    <string>退出</string>
    </property>
   </action>
  </widget>
@@ -1167,8 +1504,8 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
  </resources>
  <connections/>
  <buttongroups>
+  <buttongroup name="buttonGroup_output_directory_mode"/>
   <buttongroup name="buttonGroup_compres_option_mode"/>
   <buttongroup name="buttonGroup_output_option_mode"/>
-  <buttongroup name="buttonGroup_output_directory_mode"/>
  </buttongroups>
 </ui>
