@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>689</width>
-    <height>673</height>
+    <height>674</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -779,7 +779,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QSlider" name="horizontalSlider_colors">
+                 <widget class="MySlider" name="horizontalSlider_colors">
                   <property name="minimum">
                    <number>0</number>
                   </property>
@@ -842,7 +842,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QSlider" name="horizontalSlider_compress_speed">
+                 <widget class="MySlider" name="horizontalSlider_compress_speed">
                   <property name="minimum">
                    <number>1</number>
                   </property>
@@ -1377,7 +1377,7 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QSlider" name="horizontalSlider_compress_o">
+                 <widget class="MySlider" name="horizontalSlider_compress_o">
                   <property name="minimum">
                    <number>0</number>
                   </property>
@@ -1475,6 +1475,11 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
    <header>spinnerwidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>MySlider</class>
+   <extends>QSlider</extends>
+   <header location="global">myslider.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>toolButton_compress_option_default</tabstop>
@@ -1504,8 +1509,8 @@ QToolButton#toolButton_output_option_overwrite_original::pressed
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_output_directory_mode"/>
-  <buttongroup name="buttonGroup_compres_option_mode"/>
   <buttongroup name="buttonGroup_output_option_mode"/>
+  <buttongroup name="buttonGroup_compres_option_mode"/>
+  <buttongroup name="buttonGroup_output_directory_mode"/>
  </buttongroups>
 </ui>

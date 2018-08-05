@@ -17,6 +17,7 @@ bool is_executable_pnqguant( const QFileInfo pngquant_path );
 bool is_executable_optipng( const QFileInfo optipng_path );
 
 QStringList find_executable_pngquant();
+QStringList find_executable_optipng();
 
 // execute pnngquant command
 // returns <succeed,error_string>

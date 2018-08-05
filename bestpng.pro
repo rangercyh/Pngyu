@@ -25,7 +25,8 @@ SOURCES += \
     executecompressthread.cpp \
     preferences_dialog/pngyupreferencesdialog.cpp \
     imageoptim_integration_question_dialog/pngyuimageoptimintegrationquestiondialog.cpp \
-    executecompressworkerthread.cpp
+    executecompressworkerthread.cpp \
+    myslider.cpp
 
 HEADERS  += \
     pngyumainwindow.h \
@@ -40,14 +41,16 @@ HEADERS  += \
     preferences_dialog/pngyupreferencesdialog.h \
     imageoptim_integration_question_dialog/pngyuimageoptimintegrationquestiondialog.h \
     executecompressworkerthread.h \
-    pngyu_custom_tablewidget_item.h
+    pngyu_custom_tablewidget_item.h \
+    myslider.h
 
 
 FORMS += \
     pngyumainwindow.ui \
     preview_window/pngyupreviewwindow.ui \
     preferences_dialog/pngyupreferencesdialog.ui \
-    imageoptim_integration_question_dialog/pngyuimageoptimintegrationquestiondialog.ui
+    imageoptim_integration_question_dialog/pngyuimageoptimintegrationquestiondialog.ui \
+    myslider.ui
 
 RESOURCES += \
     resource/resource.qrc

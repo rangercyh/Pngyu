@@ -106,13 +106,13 @@ void PngyuPreferencesDialog::set_pngquant_paths( const QStringList &paths )
   ui->comboBox_pngquant_path->clear();
   foreach( const QString &path, paths )
   {
-    ui->comboBox_pngquant_path->addItem( pngyu::util::to_dot_path( path ) );
+    ui->comboBox_pngquant_path->addItem( path );
   }
 }
 
 void PngyuPreferencesDialog::set_pngquant_path( const QString &path )
 {
-  ui->comboBox_pngquant_path->insertItem( 0, pngyu::util::to_dot_path( path ) );
+  ui->comboBox_pngquant_path->insertItem( 0, path );
   ui->comboBox_pngquant_path->setCurrentIndex( 0 );
 }
 
@@ -125,7 +125,7 @@ QString PngyuPreferencesDialog::pngquant_path() const
 
 void PngyuPreferencesDialog::set_image_optim_path( const QString &path )
 {
-  ui->lineEdit_imageoptim_location->setText( pngyu::util::to_dot_path( path ) );
+  ui->lineEdit_imageoptim_location->setText( path  );
 }
 
 QString PngyuPreferencesDialog::image_optim_path() const

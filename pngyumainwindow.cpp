@@ -177,7 +177,7 @@ PngyuMainWindow::PngyuMainWindow(QWidget *parent) :
 
   { // set window size
     const QPoint center_pos = QApplication::desktop()->geometry().center();
-    const QSize window_size( 1024, 768 );
+    const QSize window_size( 800, 600 );
     setGeometry( QRect( center_pos - QPoint( window_size.width() / 2, window_size.height() / 2 ),
                         window_size ) );
   }
@@ -985,6 +985,23 @@ void PngyuMainWindow::update_ui()
       set_executable_pngquant_path( executable_pngquant_list.first() );
     }
   }
+  // find optipng
+  if ( !pngyu::is_executable_optipng(executable_image_optim_path()) )
+  {
+    const QStringList &executable_optipng_list = pngyu::find_executable_optipng();
+    if( executable_optipng_list.empty() )
+    {
+      if(image_optim_integration_mode() == pngyu::IMAGEOPTIM_ALWAYS_ENABLED)
+      {
+          set_busy_mode( true );
+          ui->statusBar->showMessage( tr( "Executable optipng not found" ) );
+      }
+    }
+    else
+    {
+      set_executable_image_optim_path( executable_optipng_list.first() );
+    }
+  }
 }
 
 void PngyuMainWindow::append_file_info_list( const QList<QFileInfo> &info_list )
@@ -1260,15 +1277,11 @@ void PngyuMainWindow::menu_preferences_pushed()
 {
 
   m_preferences_dialog->set_n_jobs( num_thread() );
-  qDebug() << image_optim_integration_mode();
   m_preferences_dialog->set_image_optim_integrate_mode( image_optim_integration_mode() );
   m_preferences_dialog->set_image_optim_path( executable_image_optim_path() );
   m_preferences_dialog->set_pngquant_paths( pngyu::find_executable_pngquant() );
   m_preferences_dialog->set_pngquant_path( executable_pngquant_path() );
   m_preferences_dialog->set_force_execute_if_negative_enabled( is_force_execute_if_negative_enabled() );
-
-
-//  m_preferences_dialog->set_apply_button_enabled( false );
 
   m_preferences_dialog->show();
 }
